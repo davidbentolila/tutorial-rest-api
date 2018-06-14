@@ -27,6 +27,13 @@ public class PersonService {
 	@Path("/")
 	public ApiResponse createPerson(Person p) {
 		ApiResponse apiResponse = new ApiResponse();
+
+		if (p.getName() == null || p.getName().isEmpty()) {
+			apiResponse.setStatus(false);
+			apiResponse.setMessage("O nome é obrigatório.");
+			return apiResponse;
+		}
+
 		p.setId(persons.size());
 		persons.put(p.getId(), p);
 		apiResponse.setStatus(true);
@@ -52,7 +59,7 @@ public class PersonService {
 			apiResponse.setMessage("Pessoa não encontrada.");
 			return apiResponse;
 		}
-		
+
 		pu.setAddress(p.getAddress());
 		pu.setName(p.getName());
 		pu.setAge(p.getAge());
